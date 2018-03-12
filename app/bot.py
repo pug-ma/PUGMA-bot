@@ -5,6 +5,7 @@ from telegram.ext import (
     Filters,
     CommandHandler
 )
+from core.pugbot import PugBot
 import os
 
 api_key = os.getenv('TOKEN')
@@ -39,6 +40,16 @@ def hello_new_users(bot, update):
             text=message
         )
 
+def last_meetup(bot, update):
+    lastMeetup = PugBot().lastEvent()
+    bot.send_message(
+        chat_id=update.message.chat_id,
+        text=lastMeetup['text'],
+        parse_mode='html',
+        photo=lastMeetup['photo']
+    )
+
+
 def main():
     updater = Updater(token=api_key)
     dispatcher = updater.dispatcher
@@ -49,9 +60,11 @@ def main():
         Filters.status_update.new_chat_members,
         hello_new_users
     ) 
+    last_meetup = CommandHandler('last_meetup', last_meetup)
 
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(new_user_handler)
+    dispatcher.add_handler(last_meetup)
 
     updater.start_polling()
     updater.idle()
