@@ -60,11 +60,11 @@ def main():
         Filters.status_update.new_chat_members,
         hello_new_users
     ) 
-    last_meetup = CommandHandler('last_meetup', last_meetup)
+    last_meetup_handler = CommandHandler('last_meetup', last_meetup)
 
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(new_user_handler)
-    dispatcher.add_handler(last_meetup)
+    dispatcher.add_handler(last_meetup_handler)
 
     updater.start_polling()
     updater.idle()
