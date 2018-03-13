@@ -27,7 +27,15 @@ class PugBot():
     def lastEvent(self):
         event = self._get_last_event()
         photo = event.pop('photo_url')
-        text = ''.join([PARAGRAPH(k, v) in event.items()])
+        text = 'Meetup PUG-MA'
+        #text = ''.join([PARAGRAPH(k, v) in event.items()])
+        message = {'text': text, 'photo': photo}
+        return message
+    
+    def Event(self, index):
+        event = self.DOC_INFO[index]
+        photo = event.pop('photo_url')
+        text = 'Meetup PUG-MA'
         message = {'text': text, 'photo': photo}
         return message
         

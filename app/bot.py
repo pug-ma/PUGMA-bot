@@ -42,11 +42,19 @@ def hello_new_users(bot, update):
 
 def last_meetup(bot, update):
     lastMeetup = PugBot().lastEvent()
-    bot.send_message(
+    bot.send_photo(
         chat_id=update.message.chat_id,
-        text=lastMeetup['text'],
-        parse_mode='html',
+        caption=lastMeetup['text'],
         photo=lastMeetup['photo']
+    )
+
+def meetup(bot, update, args):
+    index = int(''.join(args))
+    meetup = PugBot().Event(index)
+    bot.send_photo(
+        chat_id=update.message.chat_id,
+        caption=meetup['text'],
+        photo=meetup['photo']
     )
 
 
@@ -60,10 +68,12 @@ def main():
         Filters.status_update.new_chat_members,
         hello_new_users
     ) 
-    last_meetup_handler = CommandHandler('last_meetup', last_meetup)
+    last_meetup_handler = CommandHandler('lastMeetup', last_meetup)
+    meetup_handler = CommandHandler('meetup', meetup, pass_args=True)
 
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(new_user_handler)
+    dispatcher.add_handler(meetup_handler)
     dispatcher.add_handler(last_meetup_handler)
 
     updater.start_polling()
