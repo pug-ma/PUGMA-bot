@@ -1,6 +1,6 @@
 import requests
 import json
-import os
+from decouple import config
 
 BOLD = lambda k: '<b>' + k + '</b>'
 PARAGRAPH = lambda k, v: BOLD(k) + ': ' + v
@@ -15,7 +15,7 @@ class PugBot():
     photo: URL do banner utilizado para o meetup 
     """
     def __init__(self):
-        url = os.getenv('RAW_GIT_DOC_URL')
+        url = config('RAW_GIT_DOC_URL')
         if not url:
             raise Exception('Unable to load the events data, empty source URL')
         self.URL = url

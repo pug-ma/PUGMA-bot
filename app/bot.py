@@ -6,9 +6,9 @@ from telegram.ext import (
     CommandHandler
 )
 from core.pugbot import PugBot
-import os
+from decouple import config
 
-api_key = os.getenv('TOKEN')
+api_key = config('TOKEN')
 
 def start(bot, update):
     message = 'Olá! Sou o Bot do Python User Group - MA (PUGMA) '
