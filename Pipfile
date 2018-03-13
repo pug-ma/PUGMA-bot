@@ -9,6 +9,7 @@ name = "pypi"
 
 pylint = "*"
 "autopep8" = "*"
+pylama = "*"
 
 
 [requires]
@@ -20,4 +21,4 @@ python_version = "3.6"
 
 python-telegram-bot = "*"
 requests = "*"
-python-dotenv = "*"
+python-decouple = "*"
