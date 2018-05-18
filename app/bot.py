@@ -14,7 +14,11 @@ def start(bot, update):
 
 def regras(bot, update):
     message = PugBot().regras()
-    bot.send_message(chat_id=update.message.chat_id, text=message)
+    bot.send_message(
+        chat_id=update.message.chat_id,
+        text=message,
+        parse_mode='Markdown'
+    )
 
 def hello_new_users(bot, update):
     """Recebe um usário novo no chat do grupo"""
@@ -84,12 +88,13 @@ def main():
     dispatcher.add_handler(last_meetup_handler)
     dispatcher.add_handler(regras_handler)
 
-    # updater.start_webhook(listen='0.0.0.0',
-    #                      port=PORT,
-    #                      url_path=API_KEY)
-    # updater.bot.set_webhook(str(APP_NAME) + '/' + str(API_KEY))
+    updater.start_webhook(
+        listen='0.0.0.0',
+        port=PORT,
+        url_path=API_KEY
+    )
+    updater.bot.set_webhook(f'https://{APP_NAME}.herokuapp.com/{API_KEY}')
 
-    updater.start_polling()
     updater.idle()
 
 
