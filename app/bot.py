@@ -5,13 +5,16 @@ from core.pugbot import PugBot
 
 API_KEY = config('TOKEN')
 APP_NAME = config('APP_NAME')
-PORT = int(config('PORT', default='8443'))
+PORT = config('PORT', default='8443', cast=int)
 
 
 def start(bot, update):
     message = 'Olá! Sou o Bot do Python User Group - MA (PUGMA)'
     bot.send_message(chat_id=update.message.chat_id, text=message)
 
+def regras(bot, update):
+    message = PugBot().regras()
+    bot.send_message(chat_id=update.message.chat_id, text=message)
 
 def hello_new_users(bot, update):
     """Recebe um usário novo no chat do grupo"""
@@ -20,19 +23,21 @@ def hello_new_users(bot, update):
     for member in new_chat_members:
         is_bot = member.is_bot
         if not is_bot:
-            message = ('Olá @{}! Seja bem vindo ao Python User Group - MA (PUG-MA). '
-                       'Um grupo para a galera de Python do Maranhão (ou não) que '
-                       'queira interagir e ficar por dentro do que está rolando na '
-                       'cena de Python aqui.'.format(member.username)
-                       )
+            message = (
+                'Olá @{}! Seja bem vindo ao Python User Group - MA (PUG-MA). '
+                'Um grupo para a galera de Python do Maranhão (ou não) que '
+                'queira interagir e ficar por dentro do que está rolando na '
+                'cena de Python aqui.'.format(member.username)
+            )
         else:
-            message = ('@{} 00101100 00100000 01101000 01100101 01101100 01101100 '
-                       '01101111 00100000 01101101 01111001 00100000 01100110 01100101 '
-                       '01101100 01101100 01101111 01110111 00100000 01101101 01100001 '
-                       '01100011 01101000 01101001 01101110 01100101 00100000 01100110 '
-                       '01110010 01101001 01100101 01101110'
-                       '01100100 00100001'.format(member.username)
-                       )
+            message = (
+                '@{} 00101100 00100000 01101000 01100101 01101100 01101100 '
+                '01101111 00100000 01101101 01111001 00100000 01100110 01100101 '
+                '01101100 01101100 01101111 01110111 00100000 01101101 01100001 '
+                '01100011 01101000 01101001 01101110 01100101 00100000 01100110 '
+                '01110010 01101001 01100101 01101110'
+                '01100100 00100001'.format(member.username)
+            )
 
         bot.send_message(
             chat_id=update.message.chat_id,
@@ -41,7 +46,7 @@ def hello_new_users(bot, update):
 
 
 def last_meetup(bot, update):
-    lastMeetup = PugBot().lastEvent()
+    lastMeetup = PugBot().last_event()
     bot.send_photo(
         chat_id=update.message.chat_id,
         caption=lastMeetup['text'],
@@ -51,7 +56,7 @@ def last_meetup(bot, update):
 
 def meetup(bot, update, args):
     index = int(''.join(args))
-    meetup = PugBot().Event(index)
+    meetup = PugBot().event(index)
     bot.send_photo(
         chat_id=update.message.chat_id,
         caption=meetup['text'],
@@ -71,16 +76,18 @@ def main():
     )
     last_meetup_handler = CommandHandler('lastMeetup', last_meetup)
     meetup_handler = CommandHandler('meetup', meetup, pass_args=True)
+    regras_handler = CommandHandler('regras', regras)
 
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(new_user_handler)
     dispatcher.add_handler(meetup_handler)
     dispatcher.add_handler(last_meetup_handler)
+    dispatcher.add_handler(regras_handler)
 
     # updater.start_webhook(listen='0.0.0.0',
     #                      port=PORT,
     #                      url_path=API_KEY)
-    #updater.bot.set_webhook(str(APP_NAME) + '/' + str(API_KEY))
+    # updater.bot.set_webhook(str(APP_NAME) + '/' + str(API_KEY))
 
     updater.start_polling()
     updater.idle()

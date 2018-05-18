@@ -10,6 +10,9 @@ name = "pypi"
 pylint = "*"
 "autopep8" = "*"
 pylama = "*"
+black = "*"
+pylama-pylint = "*"
+ipython = "*"
 
 
 [requires]
