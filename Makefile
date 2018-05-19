@@ -1,6 +1,5 @@
 setup:
 	pip install pipenv
-	pipenv install
 	pipenv install --dev
 
 run:
