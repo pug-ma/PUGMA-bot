@@ -1,48 +1,49 @@
+"""Modulo com principais funcionalidades do PUG-MA Bot."""
 import requests
 import json
 from decouple import config
 
-# BOLD = lambda k: '<b>' + k + '</b>'
-# PARAGRAPH = lambda k, v: BOLD(k) + ': ' + v
-
 
 class PugBot():
-    """
-    PugBot() irá recolher da .env a URL para um arquivo JSON
-    contendo um array com objetos referenciados aos eventos,
-    o metodo lastEvent retorna um dict com dois elementos:
-
-    text: uma saida valida em HTML das infos
-    photo: URL do banner utilizado para o meetup
-    """
+    """Classe com todos os métodos referentes ao uso do bot do PUG-MA."""
 
     def __init__(self):
-        self.url = config('RAW_GIT_DOC_URL')
-        self.regras_url = config('REGRAS_URL')
 
-        if not self.url or not self.regras_url:
+        self._url = config('RAW_GIT_DOC_URL')
+        self._regras_url = config('REGRAS_URL')
+
+        if not self._url or not self._regras_url:
             raise Exception('Unable to load the events data, empty source URL')
 
-        self.doc_info = json.loads(requests.get(self.url).content)
-        self._regras = requests.get(self.regras_url).content.decode()
+        self._doc_info = json.loads(requests.get(self._url).content)
+        self._regras = requests.get(self._regras_url).content.decode()
 
     def _get_last_event(self):
-        return self.doc_info[-1]
+        """Filtra o último evento do grupo."""
+        return self._doc_info[-1]
 
     def last_event(self):
+        """Retorna o último evento do grupo com Descrição e Banner."""
         event = self._get_last_event()
         photo = event.pop('photo_url')
         text = 'Meetup PUG-MA'
-        # text = ''.join([PARAGRAPH(k, v) in event.items()])
         message = {'text': text, 'photo': photo}
         return message
 
     def event(self, index):
-        event = self.doc_info[index]
+        """
+        Retorna um evento específico baseado
+        no seu index/número do meetup.
+        """
+        event = self._doc_info[index]
         photo = event.pop('photo_url')
         text = 'Meetup PUG-MA'
         message = {'text': text, 'photo': photo}
         return message
 
     def regras(self):
+        """
+        Retorna as regras que os administradores
+        usam para manter o grupo.
+        """
         return self._regras

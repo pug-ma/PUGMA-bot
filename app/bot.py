@@ -1,3 +1,4 @@
+"""Modulo principal do BOT."""
 from decouple import config
 from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
 
@@ -9,10 +10,13 @@ PORT = config('PORT', default='8443', cast=int)
 
 
 def start(bot, update):
+    """Mostra um mensagem de apresentação do BOT."""
     message = 'Olá! Sou o Bot do Python User Group - MA (PUGMA)'
     bot.send_message(chat_id=update.message.chat_id, text=message)
 
+
 def regras(bot, update):
+    """Apresenta as regras do grupo."""
     message = PugBot().regras()
     bot.send_message(
         chat_id=update.message.chat_id,
@@ -20,8 +24,9 @@ def regras(bot, update):
         parse_mode='Markdown'
     )
 
+
 def hello_new_users(bot, update):
-    """Recebe um usário novo no chat do grupo"""
+    """Recebe um usário novo no chat do grupo."""
     new_chat_members = update.message.new_chat_members
 
     for member in new_chat_members:
@@ -36,9 +41,12 @@ def hello_new_users(bot, update):
         else:
             message = (
                 '@{} 00101100 00100000 01101000 01100101 01101100 01101100 '
-                '01101111 00100000 01101101 01111001 00100000 01100110 01100101 '
-                '01101100 01101100 01101111 01110111 00100000 01101101 01100001 '
-                '01100011 01101000 01101001 01101110 01100101 00100000 01100110 '
+                '01101111 00100000 01101101 01111001 '
+                '00100000 01100110 01100101 '
+                '01101100 01101100 01101111 01110111 '
+                '00100000 01101101 01100001 '
+                '01100011 01101000 01101001 01101110 '
+                '01100101 00100000 01100110 '
                 '01110010 01101001 01100101 01101110'
                 '01100100 00100001'.format(member.username)
             )
@@ -48,8 +56,14 @@ def hello_new_users(bot, update):
             text=message
         )
 
+        bot.send_message(
+            chat_id=update.message.chat_id,
+            text=PugBot().regras()
+        )
+
 
 def last_meetup(bot, update):
+    """Apresenta o último meetup do PUG."""
     lastMeetup = PugBot().last_event()
     bot.send_photo(
         chat_id=update.message.chat_id,
@@ -59,6 +73,10 @@ def last_meetup(bot, update):
 
 
 def meetup(bot, update, args):
+    """
+    Apresenta um meetup específico do PUG
+    baseado no seu número de apresentação.
+    """
     index = int(''.join(args))
     meetup = PugBot().event(index)
     bot.send_photo(
@@ -69,11 +87,11 @@ def meetup(bot, update, args):
 
 
 def main():
+    """Rotina principal de iniciação do BOT."""
     updater = Updater(token=API_KEY)
     dispatcher = updater.dispatcher
 
     start_handler = CommandHandler('start', start)
-
     new_user_handler = MessageHandler(
         Filters.status_update.new_chat_members,
         hello_new_users
@@ -94,7 +112,7 @@ def main():
         url_path=API_KEY
     )
     updater.bot.set_webhook(f'https://{APP_NAME}.herokuapp.com/{API_KEY}')
-
+    # updater.start_polling()
     updater.idle()
 
 
