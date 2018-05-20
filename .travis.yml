@@ -14,4 +14,4 @@ deploy:
   api_key:
     secure: $HEROKU_TOKEN
   app:
-    master: pugma-bot
+    master: pugmabot
