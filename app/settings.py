@@ -20,4 +20,6 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger()
-logger.setLevel(logging.DEBUG if DEBUG else logging.NOTSET)
+
+if DEBUG:
+    logger.setLevel(logging.DEBUG)
