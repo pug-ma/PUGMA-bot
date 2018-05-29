@@ -6,11 +6,11 @@ from settings import (
     PORT
 )
 from handlers import (
-    start_handler,
-    new_user_handler,
-    last_meetup_handler,
-    meetup_handler,
-    regras_handler
+    START,
+    NEW_USER,
+    LAST_MEETUP,
+    MEETUP,
+    RULES
 )
 
 
@@ -19,11 +19,11 @@ def main():
     updater = Updater(token=API_KEY)
     dispatcher = updater.dispatcher
 
-    dispatcher.add_handler(start_handler)
-    dispatcher.add_handler(new_user_handler)
-    dispatcher.add_handler(meetup_handler)
-    dispatcher.add_handler(last_meetup_handler)
-    dispatcher.add_handler(regras_handler)
+    dispatcher.add_handler(START)
+    dispatcher.add_handler(NEW_USER)
+    dispatcher.add_handler(LAST_MEETUP)
+    dispatcher.add_handler(MEETUP)
+    dispatcher.add_handler(RULES)
 
     updater.start_webhook(
         listen='0.0.0.0',

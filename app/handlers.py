@@ -79,11 +79,11 @@ def meetup(bot, update, args):
     )
 
 
-start_handler = CommandHandler('start', start)
-new_user_handler = MessageHandler(
+START = CommandHandler('start', start)
+NEW_USER = MessageHandler(
     Filters.status_update.new_chat_members,
     hello_new_users
 )
-last_meetup_handler = CommandHandler('lastMeetup', last_meetup)
-meetup_handler = CommandHandler('meetup', meetup, pass_args=True)
-regras_handler = CommandHandler('regras', regras)
+LAST_MEETUP = CommandHandler('lastMeetup', last_meetup)
+MEETUP = CommandHandler('meetup', meetup, pass_args=True)
+RULES = CommandHandler('regras', regras)
