@@ -1,6 +1,10 @@
 """Modulo principal do BOT."""
 from telegram.ext import Updater
-from settings import API_KEY
+from settings import (
+    API_KEY,
+    APP_NAME,
+    PORT
+)
 from handlers import (
     start_handler,
     new_user_handler,
