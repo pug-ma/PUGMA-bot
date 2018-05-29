@@ -19,7 +19,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 
-logger = logging.getLogger()
+LOGGER = logging.getLogger()
 
 if DEBUG:
-    logger.setLevel(logging.DEBUG)
+    LOGGER.setLevel(logging.DEBUG)
