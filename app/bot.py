@@ -1,6 +1,6 @@
 """Modulo principal do BOT."""
-from decouple import config
 from telegram.ext import Updater
+from settings import API_KEY
 from handlers import (
     start_handler,
     new_user_handler,
@@ -8,10 +8,6 @@ from handlers import (
     meetup_handler,
     regras_handler
 )
-
-API_KEY = config('TOKEN')
-APP_NAME = config('APP_NAME')
-PORT = config('PORT', default='8443', cast=int)
 
 
 def main():
