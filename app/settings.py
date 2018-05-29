@@ -1,3 +1,4 @@
+"""Module to the project settings"""
 from decouple import config
 import logging
 
