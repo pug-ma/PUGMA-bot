@@ -6,6 +6,10 @@ API_KEY = config('TOKEN')
 APP_NAME = config('APP_NAME')
 PORT = config('PORT', default='8443', cast=int)
 
+# PugBot url settings
+RAW_GIT_DOC_URL = config('RAW_GIT_DOC_URL')
+REGRAS_URL = config('RAW_GIT_DOC_URL')
+
 
 # Logging settings
 DEBUG = config('DEBUG', default=False, cast=bool)
