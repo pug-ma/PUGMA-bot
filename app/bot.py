@@ -1,13 +1,7 @@
 """Modulo principal do BOT."""
-from decouple import config
 from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
-
+from settings import API_KEY, APP_NAME, PORT, DEBUG
 from core.pugbot import PugBot
-
-API_KEY = config('TOKEN')
-APP_NAME = config('APP_NAME')
-DEBUG = config('DEBUG')
-PORT = config('PORT', default='8443', cast=int)
 
 
 def start(bot, update):
@@ -29,7 +23,7 @@ def regras(bot, update):
 def generate_hello_msg(username, is_bot):
     msg = ""
     if is_bot:
-        msg =(
+        msg = (
             '00101100 00100000 01101000 01100101 01101100 '
             '01101100 01101111 00100000 01101101 01111001 '
             '00100000 01100110 01100101 01101100 01101100 '
@@ -50,7 +44,7 @@ def generate_hello_msg(username, is_bot):
         msg = f'@{username}! ' + msg
 
     return msg
-   
+
 
 def hello_new_users(bot, update):
     """Recebe um usário novo no chat do grupo."""
@@ -120,15 +114,16 @@ def main():
     dispatcher.add_handler(last_meetup_handler)
     dispatcher.add_handler(regras_handler)
 
-    if not DEBUG:
+    if DEBUG:
+        updater.start_polling()
+    else:
         updater.start_webhook(
             listen='0.0.0.0',
             port=PORT,
             url_path=API_KEY
         )
         updater.bot.set_webhook(f'https://{APP_NAME}.herokuapp.com/{API_KEY}')
-    else:
-        updater.start_polling()
+
     updater.idle()
 
 

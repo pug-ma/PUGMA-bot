@@ -1,16 +1,15 @@
 """Modulo com principais funcionalidades do PUG-MA Bot."""
 import requests
 import json
-from decouple import config
+from settings import DOC_URL, REGRAS_URL
 
 
 class PugBot():
     """Classe com todos os métodos referentes ao uso do bot do PUG-MA."""
 
     def __init__(self):
-
-        self._url = config('RAW_GIT_DOC_URL')
-        self._regras_url = config('REGRAS_URL')
+        self._url = DOC_URL
+        self._regras_url = REGRAS_URL
 
         if not self._url or not self._regras_url:
             raise Exception('Unable to load the events data, empty source URL')
