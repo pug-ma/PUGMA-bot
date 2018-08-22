@@ -15,7 +15,7 @@ API_KEY = config('TOKEN')
 APP_NAME = config('APP_NAME')
 
 # Variável para modo DEBUG, por segurança setar como False para produção
-DEBUG = config('DEBUG')
+DEBUG = config('DEBUG', cast=bool)
 
 # Porta que a aplicação irá rodar
-PORT = config('PORT', default='8443', cast=int)
+PORT = config('PORT', cast=int)

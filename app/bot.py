@@ -1,9 +1,7 @@
 """Modulo principal do BOT."""
 from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
-
-from core.pugbot import PugBot
-
 from settings import API_KEY, APP_NAME, PORT, DEBUG
+from core.pugbot import PugBot
 
 
 def start(bot, update):
@@ -116,15 +114,16 @@ def main():
     dispatcher.add_handler(last_meetup_handler)
     dispatcher.add_handler(regras_handler)
 
-    if not DEBUG:
+    if DEBUG:
+        updater.start_polling()
+    else:
         updater.start_webhook(
             listen='0.0.0.0',
             port=PORT,
             url_path=API_KEY
         )
         updater.bot.set_webhook(f'https://{APP_NAME}.herokuapp.com/{API_KEY}')
-    else:
-        updater.start_polling()
+
     updater.idle()
 
 
