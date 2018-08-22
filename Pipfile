@@ -1,21 +1,16 @@
 [[source]]
-
 verify_ssl = true
 url = "https://pypi.python.org/simple"
 name = "pypi"
 
-
 [dev-packages]
-
 pylint = "*"
 "autopep8" = "*"
 pylama = "*"
-black = "*"
 pylama-pylint = "*"
 ipython = "*"
 
 [packages]
-
 python-telegram-bot = "*"
 requests = "*"
 python-decouple = "*"
