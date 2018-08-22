@@ -14,12 +14,6 @@ black = "*"
 pylama-pylint = "*"
 ipython = "*"
 
-
-[requires]
-
-python_version = "3.6"
-
-
 [packages]
 
 python-telegram-bot = "*"
