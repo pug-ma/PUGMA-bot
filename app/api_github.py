@@ -15,7 +15,7 @@ class Github:
         return requests.utils.quote(f'PUG-MA #{index}.jpg')
 
     def photo_encontro(self, index):
-        url = f'{self.base_url}/{self.user}/{self.repository}/contents/encontros/{self._name_encontro(index)}'
+        url = f'{self.base_url}/{self.user}/{self.repository}/contents/palestras/{self._name_encontro(index)}'
 
         response = requests.get(url)
         content = json.loads(response.content)
@@ -23,7 +23,7 @@ class Github:
         return content.get('download_url')
 
     def photo_last_encontro(self):
-        url = f'{self.base_url}/{self.user}/{self.repository}/contents/encontros/'
+        url = f'{self.base_url}/{self.user}/{self.repository}/contents/palestras/'
 
         response = requests.get(url)
         content = json.loads(response.content)
