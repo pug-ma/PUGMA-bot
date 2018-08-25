@@ -6,4 +6,4 @@ run:
 	python app/bot.py
 
 test:
-	python tests/test.py
+	pytest
