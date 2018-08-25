@@ -13,8 +13,17 @@ class TestGithub:
         
         assert 200 == response.status_code
     
-    def test_encontros_download_url(self):
+    def test_encontro_download_url(self):
         download_url = 'https://raw.githubusercontent.com/pug-ma/meetups/master/encontros/PUG-MA%20%2302.jpg'
         api = Github()
 
         assert download_url == api.photo_encontro('2')
+
+    def test_last_encontro_download_url(self):
+        download_url = 'https://raw.githubusercontent.com/pug-ma/meetups/master/encontros/meetups_info.json'
+        response = requests.get(f'{self.base_url}/{self.user}/{self.repository}/contents/encontros/')
+
+        encontros = json.loads(response.content)
+
+        assert download_url == encontros[-1].get('download_url')
+
