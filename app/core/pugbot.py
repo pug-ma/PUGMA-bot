@@ -2,12 +2,14 @@
 import requests
 import json
 from settings import DOC_URL, REGRAS_URL
+from api_github import Github
 
 
 class PugBot():
     """Classe com todos os métodos referentes ao uso do bot do PUG-MA."""
 
     def __init__(self):
+        self.api = Github()
         self._url = DOC_URL
         self._regras_url = REGRAS_URL
 
@@ -34,8 +36,7 @@ class PugBot():
         Retorna um evento específico baseado
         no seu index/número do meetup.
         """
-        event = self._doc_info[index]
-        photo = event.pop('photo_url')
+        photo = self.api.photo_encontro(str(index))
         text = 'Meetup PUG-MA'
         message = {'text': text, 'photo': photo}
         return message
