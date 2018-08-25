@@ -21,9 +21,6 @@ class TestGithub:
 
     def test_last_encontro_download_url(self):
         download_url = 'https://raw.githubusercontent.com/pug-ma/meetups/master/encontros/meetups_info.json'
-        response = requests.get(f'{self.base_url}/{self.user}/{self.repository}/contents/encontros/')
+        api = Github()
 
-        encontros = json.loads(response.content)
-
-        assert download_url == encontros[-1].get('download_url')
-
+        assert download_url == api.photo_last_encontro()

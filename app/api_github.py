@@ -19,4 +19,13 @@ class Github:
 
         response = requests.get(url)
         content = json.loads(response.content)
+        
         return content.get('download_url')
+
+    def photo_last_encontro(self):
+        url = f'{self.base_url}/{self.user}/{self.repository}/contents/encontros/'
+
+        response = requests.get(url)
+        content = json.loads(response.content)
+
+        return content[-1].get('download_url')
