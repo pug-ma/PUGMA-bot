@@ -9,6 +9,7 @@ pylint = "*"
 pylama = "*"
 pylama-pylint = "*"
 ipython = "*"
+pytest = "*"
 
 [packages]
 python-telegram-bot = "*"
