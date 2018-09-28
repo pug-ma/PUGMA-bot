@@ -1,15 +1,21 @@
+# -*- coding: utf-8 -*-
 """Modulo principal do BOT."""
+import telegram
 from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
+from telegram.ext import InlineQueryHandler
 from settings import API_KEY, APP_NAME, PORT, DEBUG
 from core.pugbot import PugBot
+from core.help import Help as helper
 
 
 def start(bot, update):
     """Mostra um mensagem de apresentação do BOT."""
-    message = 'Olá! Sou o Bot do Python User Group - MA (PUGMA)'
-    bot.send_message(chat_id=update.message.chat_id, text=message)
+    message = 'Olá! Sou o Bot do Python User Group - MA (PUGMA)!'
+    print(type(helper.instance))
+    bot.send_message(chat_id=update.message.chat_id,
+                     text=message)
 
-
+@helper.command_doc
 def regras(bot, update):
     """Apresenta as regras do grupo."""
     message = PugBot().regras()
@@ -19,6 +25,22 @@ def regras(bot, update):
         parse_mode='Markdown'
     )
 
+@helper.command_doc
+def help(bot, update):
+    """Lista os comandos do bot"""
+    print("passei")
+    try:
+        lista = helper().lista_comando
+        message = ""
+        for i in lista:
+            print(i)
+            message += i + "\n"
+        bot.send_message(
+        chat_id=update.message.chat_id,
+        text=message,
+        parse_mode='Markdown')
+    except:
+        print("erro")
 
 def generate_hello_msg(username, is_bot):
     msg = ""
@@ -45,7 +67,6 @@ def generate_hello_msg(username, is_bot):
 
     return msg
 
-
 def hello_new_users(bot, update):
     """Recebe um usário novo no chat do grupo."""
     new_chat_members = update.message.new_chat_members
@@ -69,9 +90,9 @@ def hello_new_users(bot, update):
                 parse_mode='Markdown'
             )
 
-
+@helper.command_doc
 def last_meetup(bot, update):
-    """Apresenta o último meetup do PUG."""
+    """/lastMeetup - Apresenta o último meetup do PUG."""
     lastMeetup = PugBot().last_event()
     bot.send_photo(
         chat_id=update.message.chat_id,
@@ -80,8 +101,10 @@ def last_meetup(bot, update):
     )
 
 
+@helper.command_doc
 def meetup(bot, update, args):
     """
+    /meetup #
     Apresenta um meetup específico do PUG
     baseado no seu número de apresentação.
     """
@@ -99,20 +122,27 @@ def main():
     updater = Updater(token=API_KEY)
     dispatcher = updater.dispatcher
 
+
     start_handler = CommandHandler('start', start)
+
     new_user_handler = MessageHandler(
         Filters.status_update.new_chat_members,
         hello_new_users
     )
+
+
     last_meetup_handler = CommandHandler('lastMeetup', last_meetup)
     meetup_handler = CommandHandler('meetup', meetup, pass_args=True)
+    help_handler = CommandHandler('help', help)
     regras_handler = CommandHandler('regras', regras)
 
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(new_user_handler)
     dispatcher.add_handler(meetup_handler)
     dispatcher.add_handler(last_meetup_handler)
+    dispatcher.add_handler(help_handler)
     dispatcher.add_handler(regras_handler)
+
 
     if DEBUG:
         updater.start_polling()
