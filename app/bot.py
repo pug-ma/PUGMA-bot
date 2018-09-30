@@ -1,27 +1,36 @@
 # -*- coding: utf-8 -*-
 """Modulo principal do BOT."""
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
 from settings import API_KEY, APP_NAME, PORT, DEBUG
 from core.pugbot import PugBot
 from core.help import Help as helper
 
 
-def start(bot, update):
+def start(bot, update, args):
     """Mostra um mensagem de apresentação do BOT."""
     message = 'Olá! Sou o Bot do Python User Group - MA (PUGMA)!'
+    if 'rules' in args:
+        message += "\n" + PugBot().regras()
     bot.send_message(chat_id=update.message.chat_id,
                      text=message)
 
 
 @helper.command_doc
-def regras(bot, update):
+def regras(bot, update, args):
     """/regras - Apresenta as regras do grupo."""
+    bot_chat = "https://t.me/{}?start=rules".format(bot.username)
     try:
-        message = PugBot().regras()
+        rules_keyboard = [[InlineKeyboardButton(text="Leia as regras",
+                                               url=bot_chat
+                                               )]]
+        if 'username' not in args:
+            username=update.message.from_user.username
         bot.send_message(
             chat_id=update.message.chat_id,
-            text=message,
-            parse_mode='Markdown'
+            text='@{}, abaixo as regras'.format(username),
+            parse_mode='HTML',
+            reply_markup=InlineKeyboardMarkup(rules_keyboard)
         )
     except Exception as e:
         print(e)
@@ -86,11 +95,7 @@ def hello_new_users(bot, update):
                 text=message
             )
 
-            bot.send_message(
-                chat_id=update.message.chat_id,
-                text=PugBot().regras(),
-                parse_mode='Markdown'
-            )
+            regras(bot, update, username)
 
 
 @helper.command_doc
@@ -122,7 +127,7 @@ def main():
     updater = Updater(token=API_KEY)
     dispatcher = updater.dispatcher
 
-    start_handler = CommandHandler('start', start)
+    start_handler = CommandHandler('start', start, pass_args=True)
 
     new_user_handler = MessageHandler(
         Filters.status_update.new_chat_members,
@@ -132,7 +137,7 @@ def main():
     last_meetup_handler = CommandHandler('lastMeetup', last_meetup)
     meetup_handler = CommandHandler('meetup', meetup, pass_args=True)
     help_handler = CommandHandler('help', help)
-    regras_handler = CommandHandler('regras', regras)
+    regras_handler = CommandHandler('regras', regras, pass_args=True)
 
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(new_user_handler)
