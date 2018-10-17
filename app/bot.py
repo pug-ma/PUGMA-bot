@@ -34,14 +34,14 @@ def generate_hello_msg(username, is_bot):
         )
     else:
         msg = (
-            'Seja bem vindo ao Python User Group - MA (PUG-MA). '
+            'Este é o Python User Group - MA (PUG-MA). '
             'Um grupo para a galera de Python do Maranhão (ou não) que '
             'queira interagir e ficar por dentro do que está rolando na '
             'cena de Python aqui.'
         )
 
     if username is not None:
-        msg = f'@{username}! ' + msg
+        msg = 'Olá ' + f'@{username}! ' + msg
 
     return msg
 
