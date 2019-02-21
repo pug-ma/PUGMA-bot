@@ -6,32 +6,62 @@ from settings import API_KEY, APP_NAME, PORT, DEBUG
 from core.pugbot import PugBot
 from core.help import Help as helper
 
+import os
 
-def start(bot, update, args):
+REGRAS_PATH = os.path.join(os.getcwd(), "REGRAS.md")
+
+def start(bot, update, **kwargs):
     """Mostra um mensagem de apresentação do BOT."""
     message = 'Olá! Sou o Bot do Python User Group - MA (PUGMA)!'
-    if 'rules' in args:
-        message += "\n" + PugBot().regras()
-    bot.send_message(chat_id=update.message.chat_id,
-                     text=message)
+    print(update.message)
 
+    f = open(REGRAS_PATH, 'r')
+
+    message = f.read()
+
+    #bot.send_message(
+    #    chat_id=update.message.chat_id,
+    #    text=message,
+    #    parse_mode='Markdown'
+    #)
+
+    bot.send_message(
+        chat_id=update.message.chat_id,
+        text=message,
+        parse_mode='Markdown'
+    )
 
 @helper.command_doc
-def regras(bot, update, args):
+def regras(bot, update, **kwargs):
     """/regras - Apresenta as regras do grupo."""
     bot_chat = "https://t.me/{}?start=rules".format(bot.username)
     try:
-        rules_keyboard = [[InlineKeyboardButton(text="Leia as regras",
-                                               url=bot_chat
-                                               )]]
-        if 'username' not in args:
-            username=update.message.from_user.username
+        rules_keyboard = [[InlineKeyboardButton(
+            text="Leia as regras:",
+            url=bot_chat
+        )]]
+
+        subtext = "abaixo as regras:"
+
+        if 'username' not in kwargs:
+            username = ""
+            subtext = subtext.capitalize()
+        else:
+            username = kwargs["username"]
+            subtext = "@{}, {}".format(username, subtext)
+
+        if 'user_id' not in kwargs:
+            user_id = None
+        else:
+            user_id = kwargs["user_id"]
+
         bot.send_message(
             chat_id=update.message.chat_id,
-            text='@{}, abaixo as regras'.format(username),
+            text=subtext,
             parse_mode='HTML',
             reply_markup=InlineKeyboardMarkup(rules_keyboard)
         )
+
     except Exception as e:
         print(e)
 
@@ -50,7 +80,6 @@ def help(bot, update):
             parse_mode='Markdown')
     except Exception as e:
         print(e)
-
 
 def generate_hello_msg(username, is_bot):
     msg = ""
@@ -86,7 +115,7 @@ def hello_new_users(bot, update):
         user_id = member.id
 
         if user_id != bot.id:
-            username, is_bot = member.username, member.is_bot
+            username, user_id, is_bot = member.username, member.id, member.is_bot
 
             message = generate_hello_msg(username, is_bot)
 
@@ -95,7 +124,7 @@ def hello_new_users(bot, update):
                 text=message
             )
 
-            regras(bot, update, username)
+            regras(bot, update, username=username, user_id=user_id)
 
 
 @helper.command_doc
