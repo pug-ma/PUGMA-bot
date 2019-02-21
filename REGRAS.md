@@ -7,6 +7,7 @@
 - 5º Tenha cuidado nas palavras que você escolher.
 - 6º Quando discordamos, tente entender por quê.
 - 7º Não somos o Clube da Luta então pode falar do grupo para outras pessoas sim ;)
+- 8º Cuidado para não virar GIF
 
 Lembre-se que aqui é um grupo para todos os tipos de perfis e é intolerável qualquer discriminação. Se você é alguém que sabe muito sobre algum assunto não seja babaca com o amiguinho que está começando, mas sim o ajude.
 
