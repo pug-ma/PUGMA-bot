@@ -12,18 +12,11 @@ REGRAS_PATH = os.path.join(os.getcwd(), "REGRAS.md")
 
 def start(bot, update, **kwargs):
     """Mostra um mensagem de apresentação do BOT."""
-    message = 'Olá! Sou o Bot do Python User Group - MA (PUGMA)!'
-    print(update.message)
+    message = 'Olá! Sou o Bot do Python User Group - MA (PUGMA)!\n'
 
     f = open(REGRAS_PATH, 'r')
 
-    message = f.read()
-
-    #bot.send_message(
-    #    chat_id=update.message.chat_id,
-    #    text=message,
-    #    parse_mode='Markdown'
-    #)
+    message += f.read()
 
     bot.send_message(
         chat_id=update.message.chat_id,
