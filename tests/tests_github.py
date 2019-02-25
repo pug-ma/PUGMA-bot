@@ -8,7 +8,7 @@ class TestGithub:
     repository = 'meetups'
     base_url = 'https://api.github.com/repos'
     headers = {
-        'user-agent': self.user
+        'user-agent': 'pug-ma'
     }
 
     def test_repository(self):
