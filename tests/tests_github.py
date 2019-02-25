@@ -1,18 +1,21 @@
 import requests
 import json
-from app.api_github import Github 
+from app.api_github import Github
 
 
 class TestGithub:
     user = 'pug-ma'
     repository = 'meetups'
     base_url = 'https://api.github.com/repos'
-        
+    headers = {
+        'user-agent': 'pug-ma'
+    }
+
     def test_repository(self):
-        response = requests.get(f'{self.base_url}/{self.user}/{self.repository}')
-        
+        response = requests.get(f'{self.base_url}/{self.user}/{self.repository}', headers=self.headers)
+
         assert 200 == response.status_code
-    
+
     def test_encontro_download_url(self):
         download_url = 'https://raw.githubusercontent.com/pug-ma/meetups/master/palestras/PUG-MA%20%2302.jpg'
         api = Github()
