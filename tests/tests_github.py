@@ -1,29 +1,38 @@
-import requests
 import json
-from app.api_github import Github
+
+import requests
+
+from bot.configuration import GithubData
+from bot.utils import photo_meetup
 
 
 class TestGithub:
-    user = 'pug-ma'
-    repository = 'meetups'
-    base_url = 'https://api.github.com/repos'
-    headers = {
-        'user-agent': 'pug-ma'
-    }
+    github_data = GithubData()
+    contents_url = f"{github_data.url}/contents/palestras?ref=master"
 
     def test_repository(self):
-        response = requests.get(f'{self.base_url}/{self.user}/{self.repository}', headers=self.headers)
+        response = requests.get(self.github_data.url, headers=self.github_data.headers)
 
         assert 200 == response.status_code
 
     def test_encontro_download_url(self):
-        download_url = 'https://raw.githubusercontent.com/pug-ma/meetups/master/palestras/PUG-MA%20%2302.jpg'
-        api = Github()
+        download_url = "https://raw.githubusercontent.com/pug-ma/meetups/master/palestras/PUG-MA%20%2302.jpg"
+        cmd = ["#meetup", "1"]
 
-        assert download_url == api.photo_encontro('2')
+        result, num = photo_meetup(self.github_data, cmd)
+
+        assert download_url == result
 
     def test_last_encontro_download_url(self):
-        download_url = 'https://raw.githubusercontent.com/pug-ma/meetups/master/palestras/PUG-MA%20%2310.jpg'
-        api = Github()
+        response = requests.get(self.contents_url, headers=self.github_data.headers)
 
-        assert download_url == api.photo_last_encontro()
+        content = json.loads(response.content)
+        content_length = len(content)
+
+        last_photo_url = content[-1].get("download_url")
+
+        cmd = ["#meetup"]
+
+        result, num = photo_meetup(self.github_data, cmd)
+
+        assert last_photo_url == result
