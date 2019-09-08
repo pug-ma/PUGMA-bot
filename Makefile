@@ -1,9 +1,9 @@
 setup:
 	pip install pipenv
-	pipenv install --dev
+	pipenv install
 
 run:
-	python app/bot.py
+	python app.py
 
 test:
-	pytest
+	py.test

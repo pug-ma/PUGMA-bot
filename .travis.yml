@@ -1,17 +1,21 @@
 language: python
-
 python:
-  - "3.6"
-
-install: 
-  - make setup
-
-script: 
-  - make test
-
+- '3.7'
+install:
+- make setup
+script:
+- make test
 deploy:
   provider: heroku
   api_key:
-    secure: $HEROKU_TOKEN
+    secure: "$HEROKU_TOKEN"
   app:
     master: pugmabot
+env:
+  global:
+  - secure: "$API_ID"
+  - secure: "$API_HASH"
+  - secure: "$TOKEN"
+  - secure: "$STICKERSET_ID"
+  - secure: "$STICKERSET_HASH"
+  - DEBUG=0
