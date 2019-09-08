@@ -7,7 +7,7 @@ install:
   - make setup
 
 script:
-  - make run
+  - make test
 
 deploy:
   provider: heroku
