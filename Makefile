@@ -1,8 +1,9 @@
 setup:
-	pip install -r requirements.txt
+	pip install pipenv
+	pipenv install
 
 run:
 	python app.py
 
 test:
-	pytest
+	py.test
