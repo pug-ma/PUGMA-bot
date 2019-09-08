@@ -16,6 +16,7 @@ env:
   - secure: "$API_ID"
   - secure: "$API_HASH"
   - secure: "$APP_NAME"
+  - secure: "$PORT"
   - secure: "$TOKEN"
   - secure: "$STICKERSET_ID"
   - secure: "$STICKERSET_HASH"
