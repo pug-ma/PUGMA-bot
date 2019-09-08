@@ -1,38 +1,40 @@
 import json
 
+import pytest
 import requests
 
 from bot.configuration import GithubData
 from bot.utils import photo_meetup
 
+github_data = GithubData()
+contents_url = f"{github_data.url}/contents/palestras?ref=master"
 
-class TestGithub:
-    github_data = GithubData()
-    contents_url = f"{github_data.url}/contents/palestras?ref=master"
 
-    def test_repository(self):
-        response = requests.get(self.github_data.url, headers=self.github_data.headers)
+def test_repository():
+    response = requests.get(github_data.url, headers=github_data.headers)
 
-        assert 200 == response.status_code
+    assert 200 == response.status_code
 
-    def test_encontro_download_url(self):
-        download_url = "https://raw.githubusercontent.com/pug-ma/meetups/master/palestras/PUG-MA%20%2302.jpg"
-        cmd = ["#meetup", "1"]
 
-        result, num = photo_meetup(self.github_data, cmd)
+def test_encontro_download_url():
+    download_url = "https://raw.githubusercontent.com/pug-ma/meetups/master/palestras/PUG-MA%20%2302.jpg"
+    cmd = ["#meetup", "1"]
 
-        assert download_url == result
+    result, num = photo_meetup(github_data, cmd)
 
-    def test_last_encontro_download_url(self):
-        response = requests.get(self.contents_url, headers=self.github_data.headers)
+    assert download_url == result
 
-        content = json.loads(response.content)
-        content_length = len(content)
 
-        last_photo_url = content[-1].get("download_url")
+def test_last_encontro_download_url():
+    response = requests.get(contents_url, headers=github_data.headers)
 
-        cmd = ["#meetup"]
+    content = json.loads(response.content)
+    content_length = len(content)
 
-        result, num = photo_meetup(self.github_data, cmd)
+    last_photo_url = content[-1].get("download_url")
 
-        assert last_photo_url == result
+    cmd = ["#meetup"]
+
+    result, num = photo_meetup(github_data, cmd)
+
+    assert last_photo_url == result
