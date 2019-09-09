@@ -29,8 +29,6 @@ from itertools import repeat
 from operator import eq
 from random import choices
 
-import requests
-from PIL import Image
 from telethon import errors, events
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.types import InputStickerSetID
