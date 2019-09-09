@@ -1,7 +1,7 @@
 # PUGMA bot
 
 [![Build Status](https://travis-ci.org/pug-ma/PUGMA-bot.svg?branch=master)](https://travis-ci.org/pug-ma/PUGMA-bot)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/bb0639c4ebc44c27ba45c165895706e5)](https://www.codacy.com/manual/mschonfinkel/PUGMA-bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pug-ma/PUGMA-bot&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/07e9dfb47a564ffa8395b83d3d44658f)](https://www.codacy.com/manual/mtrsk/PUGMA-bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pug-ma/PUGMA-bot&amp;utm_campaign=Badge_Grade)
 [![GitHub contributors](https://img.shields.io/github/contributors/pug-ma/PUGMA-bot)](https://github.com/pug-ma/PUGMA-bot/graphs/contributors)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
@@ -25,7 +25,12 @@ $ cp .env.sample .env
 
 * Docker
 ```sh
-#TODO
+$ docker-compose up
+```
+
+* Nix
+```sh
+$ nix-shell
 ```
 
 * Python
