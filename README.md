@@ -11,29 +11,29 @@ Um bot para o Python User Group - MA.
 
 Antes the utilizar esse bot é necessário que você possua seu próprio ID e HASH no Telegram, adicionalmente é necessário possuir um `TOKEN` para usar a api de bots. Você pode conseguí-los seguindo estes passos:
 
-1. Faça seu login com sua conta no Telegram [neste endereço](https://my.telegram.org/).
-2. Clique em **API Development tools**.
-3. Cria uma nova aplicação, não é necessário fornecer todos os detalhes (como `URL`), apenas `APP title` e `Short Name`.
-4. Clique em **Create Application** e você obterá seu HASH e ID. Evite postar esses dados publicamente.
-5. Use o `Botfather` para conseguir um `TOKEN` pro seu bot.
-6. Copie o `.env.sample` como `.env` e preencha com seus dados:
-```sh
-$ cp .env.sample .env
-```
+  1. Faça seu login com sua conta no Telegram [neste endereço](https://my.telegram.org/).
+  2. Clique em **API Development tools**.
+  3. Cria uma nova aplicação, não é necessário fornecer todos os detalhes (como `URL`), apenas `APP title` e `Short Name`.
+  4. Clique em **Create Application** e você obterá seu HASH e ID. Evite postar esses dados publicamente.
+  5. Use o `Botfather` para conseguir um `TOKEN` pro seu bot.
+  6. Copie o `.env.sample` como `.env` e preencha com seus dados:
+  ```sh
+    $ cp .env.sample .env
+  ```
 
 ## Rodando
 
-* Docker
-```sh
-$ docker-compose up
-```
+  * Docker
+  ```sh
+  $ docker-compose up
+  ```
 
-* Nix
-```sh
-$ nix-shell
-```
+  * Nix
+  ```sh
+  $ nix-shell
+  ```
 
-* Python
-```sh
-$ python app.py
-```
+  * Python
+  ```sh
+  $ python app.py
+  ```
