@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pugma-bot
+    env_file: .env
+    volumes:
+      - sqlite-data:/home/appuser/data
+
+volumes:
+  sqlite-data:

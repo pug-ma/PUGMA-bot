@@ -1,9 +1,18 @@
-FROM python:3.6.6-stretch
+FROM python:3.7-slim-buster
 
-WORKDIR /usr/src/pugma-bot
+# Diretório pro projeto
+RUN useradd --create-home appuser
+WORKDIR /home/appuser
 
-COPY . .
-
+# Install requirements
+COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
-CMD ["python", "app/bot.py"]
+# Rode o container como usuário não-root
+USER appuser
+
+# Copia o projeto
+COPY . .
+
+# Rode o bot
+CMD ["python", "app.py"]
