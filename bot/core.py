@@ -144,7 +144,7 @@ def commands(bot):
 
     @bot.on(events.NewMessage(pattern="/spam(mer)?", forwards=False))
     async def spam(event):
-        """/spam, #spammer: Informa que spam não é bem vindo no grupo, seguido da deleção da mensagem."""
+        """/spam, /spammer: Informa que spam não é bem vindo no grupo, seguido da deleção da mensagem."""
         await asyncio.wait(
             [event.delete(), event.respond(SPAM, reply_to=event.reply_to_msg_id)]
         )

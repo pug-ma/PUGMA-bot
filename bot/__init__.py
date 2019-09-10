@@ -5,6 +5,7 @@ from itertools import repeat
 from operator import eq
 
 from telethon import TelegramClient, errors, events
+from telethon.sessions import StringSession
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.types import InputStickerSetID
 
@@ -22,10 +23,10 @@ logging.basicConfig(
 async_logger = logging.getLogger("asyncio")
 async_logger.setLevel(logging.ERROR)
 
-APP_NAME = settings.token.split(":")[0]
+SESSION = settings.session
 
-bot = TelegramClient(APP_NAME, settings.api_id, settings.api_hash)
+bot = TelegramClient(StringSession(SESSION), settings.api_id, settings.api_hash)
 
-# Setando as handles do bot
+# Setando os handlers do bot
 default(bot)
 commands(bot)
