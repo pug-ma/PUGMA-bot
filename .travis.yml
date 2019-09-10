@@ -11,6 +11,10 @@ deploy:
     secure: "$HEROKU_TOKEN"
   app:
     master: "$APP_NAME"
+cache:
+  directories:
+    - $PIP_CACHE_DIR
+    - $PIPENV_CACHE_DIR
 env:
   global:
   - secure: "$API_ID"
@@ -21,3 +25,5 @@ env:
   - secure: "$STICKERSET_ID"
   - secure: "$STICKERSET_HASH"
   - DEBUG=0
+  - PIP_CACHE_DIR=$HOME/.cache/pip
+  - PIPENV_CACHE_DIR=$HOME/.cache/pipenv
