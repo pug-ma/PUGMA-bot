@@ -15,6 +15,7 @@ github_data = GithubData()
 contents_url = f"{github_data.url}/contents/palestras?ref=master"
 
 
+@pytest.mark.xfail
 def test_repository():
     """
     Testa se a API e os repositórios do PUG estão OK
@@ -24,6 +25,7 @@ def test_repository():
     assert response.status_code == 200
 
 
+@pytest.mark.xfail
 def test_encontro_download_url():
     """
     Testa se o commando /meetup 1 retorna o primeiro meetup
