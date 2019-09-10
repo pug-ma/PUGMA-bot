@@ -10,13 +10,13 @@ deploy:
   api_key:
     secure: "$HEROKU_TOKEN"
   app:
-    master: pugmabot
+    master: "$APP_NAME"
 env:
   global:
   - secure: "$API_ID"
   - secure: "$API_HASH"
   - secure: "$APP_NAME"
-  - secure: "$PORT"
+  - secure: "$SESSION_STRING"
   - secure: "$TOKEN"
   - secure: "$STICKERSET_ID"
   - secure: "$STICKERSET_HASH"

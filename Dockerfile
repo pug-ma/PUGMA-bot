@@ -1,5 +1,11 @@
 FROM python:3.7-slim-buster
 
+# ARGS da Build
+ARG DEBUG=0
+
+# ENVARS
+ENV DEBUG="${DEBUG}"
+
 # Diretório pro projeto
 RUN useradd --create-home appuser
 WORKDIR /home/appuser
