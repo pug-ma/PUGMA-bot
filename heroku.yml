@@ -1,0 +1,10 @@
+build:
+  docker:
+    worker: Dockerfile
+  config:
+    DEBUG: 0
+run:
+  worker:
+    command:
+      - python app.py
+    image: worker
