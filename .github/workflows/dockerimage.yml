@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches:
+    - master
+    jobs:
+      build:
+        runs-on: python:3.7-slim-buster
+        steps:
+        - uses: actions/checkout@v1
+        - name: pugma-bot
+          run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+  
+  pull-request:
+    jobs:
+      build:
+        runs-on: python:3.7-slim-buster
+        steps:
+        - uses: actions/checkout@v1
+        - name: pugma-bot
+          run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
