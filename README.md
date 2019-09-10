@@ -7,6 +7,8 @@
 
 Um bot para o Python User Group - MA.
 
+Pull requests são sempre bem vindos na Branch `dev`.
+
 ## Contribuindo
 
 Antes the utilizar esse bot é necessário que você possua seu próprio ID e HASH no Telegram, adicionalmente é necessário possuir um `TOKEN` para usar a api de bots. Você pode conseguí-los seguindo estes passos:
@@ -16,7 +18,8 @@ Antes the utilizar esse bot é necessário que você possua seu próprio ID e HA
   3. Cria uma nova aplicação, não é necessário fornecer todos os detalhes (como `URL`), apenas `APP title` e `Short Name`.
   4. Clique em **Create Application** e você obterá seu HASH e ID. Evite postar esses dados publicamente.
   5. Use o `Botfather` para conseguir um `TOKEN` pro seu bot.
-  6. Copie o `.env.sample` como `.env` e preencha com seus dados:
+  6. Rode o script `string_session.py` e coloque o `TOKEN` do seu bot quando for pedido.
+  7. Copie o `.env.sample` como `.env` e preencha com seus dados:
   ```sh
     $ cp .env.sample .env
   ```
