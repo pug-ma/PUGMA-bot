@@ -1,6 +1,6 @@
-from bot import bot, settings
+from bot import Bot, settings
 
 if __name__ == "__main__":
-    bot.start(bot_token=settings.token)
+    Bot.start(bot_token=settings.token)
 
-    bot.run_until_disconnected()
+    Bot.run_until_disconnected()

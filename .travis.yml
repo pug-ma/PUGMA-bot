@@ -1,6 +1,10 @@
 language: python
 python:
 - '3.7'
+branches:
+  only:
+    - master
+    - dev
 install:
 - make setup
 script:
@@ -11,6 +15,8 @@ deploy:
     secure: "$HEROKU_TOKEN"
   app:
     master: "$APP_NAME"
+  on:
+    branch: master
 cache:
   directories:
     - $PIP_CACHE_DIR

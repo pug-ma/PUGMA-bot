@@ -1,4 +1,4 @@
-{ pkgs ? import ./pinned-nixpkgs.nix {} }:
+{ pkgs ? import ./nix/pinned-nixpkgs.nix {} }:
 
 let
   python = pkgs.python37Packages;
