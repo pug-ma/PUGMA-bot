@@ -7,20 +7,6 @@ import json
 import requests
 
 
-def hidden(func):
-    """
-    Decorator que adiciona um atributo 'is_hidden' na função
-    em que é aplicado. É utilizado no módulo `core.py` para
-    ocultar certos comandos.
-    """
-
-    def wrapper(*args, **kwargs):
-        return func(*args, **kwargs)
-
-    wrapper.is_hidden = True
-    return wrapper
-
-
 def photo_meetup(repo_data, matches):
     """
     Recebe como entrada uma Dataclass com dados do nosso

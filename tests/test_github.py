@@ -8,8 +8,8 @@ import json
 import pytest
 import requests
 
-from bot.configuration import GithubData
-from bot.utils import photo_meetup
+from bot.configuration.github import GithubData
+from bot.utils.github import photo_meetup
 
 github_data = GithubData()
 contents_url = f"{github_data.url}/contents/palestras?ref=master"

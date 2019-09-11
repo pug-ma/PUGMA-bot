@@ -1,6 +1,6 @@
 """Configurações do projeto."""
 import os
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from decouple import config
 
@@ -29,26 +29,3 @@ class BaseConfig:
     # Valores para que o bot consiga usar sticker
     stickerset_id: int = config("STICKERSET_ID", cast=int)
     stickerset_hash: int = config("STICKERSET_HASH", cast=int)
-
-
-@dataclass
-class GithubData:
-    """
-    Classe com os dados da organização do PUGMA
-    no Github.
-    """
-
-    user: str = "pug-ma"
-    repository: str = "meetups"
-    base_url: str = "https://api.github.com/repos"
-    url: str = field(init=False)
-    headers: dict = field(init=False)
-
-    def __post_init__(self):
-        self.url: str = f"{self.base_url}/{self.user}/{self.repository}"
-        self.headers: dict = {"user-agent": self.user}
-
-
-github_data = GithubData()
-
-settings = BaseConfig()
