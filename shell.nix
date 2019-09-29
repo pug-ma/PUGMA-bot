@@ -5,6 +5,7 @@ let
 
   pythonPkgs = with python; [
     aiohttp
+    feedparser
     pillow
     python-decouple
     pytest

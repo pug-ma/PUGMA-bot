@@ -5,9 +5,9 @@ WELCOME = {
     "cena de Python aqui."
 }
 
-SPAM = (
-    "SPAM não é uma atitude bem vinda no grupo. O usuário será "
-    "removido após 3 denúncias."
+SPAM = lambda x, y: (
+    f"O coleguinha {x} foi denunciado por SPAM e será mandando pro "
+    f"canto em mais {y}/3 denúncias."
 )
 
 RULES = open("REGRAS.md", "r").read()

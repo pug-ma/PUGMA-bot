@@ -2,13 +2,15 @@
 Ações que lidam com ChatActions ou NewMessages
 que fazem matches com determinados regexes.
 """
-
+import asyncio
 import logging
 from random import choices
 
 from telethon import errors, events
+from telethon.tl.custom import Button
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.types import InputStickerSetID
+from telethon.utils import get_display_name, get_message_id, is_gif
 
 from bot.configuration import settings
 from bot.constants import RULES, WELCOME
@@ -20,6 +22,7 @@ def default(bot):
     Implementações de funcionalidades que não dependem de comandos
     digitados por um usuário.
     - arch
+    - start
     - welcome
     """
 
@@ -66,9 +69,12 @@ def default(bot):
         """
         last_welcome = {}
 
-        bot_id = await bot.get_peer_id("me")
+        bot_user = await bot.get_entity("me")
 
-        conditions = [event.user_joined or event.user_added, event.user.id != bot_id]
+        conditions = [
+            event.user_joined or event.user_added,
+            event.user.id != bot_user.id,
+        ]
 
         if all(conditions):
             if event.chat_id in last_welcome:
@@ -77,5 +83,33 @@ def default(bot):
                 except errors.MessageDeleteForbiddenError as error:
                     logging.error(error)
 
-            last_welcome[event.chat_id] = await event.reply(WELCOME["pugma"])
-            await bot.send_message(event.chat_id, RULES)
+            user_id = event.user.id
+            user = await bot.get_entity(user_id)
+
+            welcome_user = (
+                f'Olá <a href="tg://user?id={user_id}">{get_display_name(user)}</a>!'
+            )
+
+            await bot.send_message(
+                event.chat_id,
+                welcome_user + " " + WELCOME["pugma"],
+                buttons=Button.url(
+                    text=f"Leia as Regras do Grupo!",
+                    url=f"https://t.me/{bot_user.username}?start=start",
+                ),
+                parse_mode="html",
+            )
+
+    @bot.on(events.NewMessage(pattern="/start", forwards=False))
+    async def start(event):
+        """/start: Comando que mostra a regras do grupo no PV."""
+        try:
+            await event.delete()
+        except errors.rpcerrorlist.MessageDeleteForbiddenError as error:
+            logging.error(error)
+
+        if not (event.is_group or event.is_channel):
+            message = await event.respond(RULES)
+            # Sleep por 300 segundos, depois deleta a mensagem.
+            await asyncio.sleep(300)
+            await message.delete()
