@@ -3,6 +3,7 @@ Comandos usados por um usuário comuns sem permissões de administrador.
 """
 
 import asyncio
+import re
 from itertools import repeat
 from operator import eq
 
@@ -20,6 +21,7 @@ def commands(bot):
     Implementações de comandos básicos:
     - /help
     - /meetup <d:int>?
+    - /sed -e s/<expr>/<expr>/(g)?
     - /spam(mer)
     - /version
     """
@@ -62,6 +64,38 @@ def commands(bot):
         if photo_url and event_num:
             text = "Meetup PUG-MA: " + str(event_num)
             await bot.send_file(event.chat_id, file=photo_url, caption=text)
+
+    @bot.on(
+        events.NewMessage(pattern="/sed(\s-e\s+s\/[\w]+\/[\w]+(\/g)?)+", forwards=False)
+    )
+    async def sed(event):
+        """/sed: Aplica um subconjunto do comando sed numa mensagem."""
+
+        message = await event.message.get_reply_message()
+        message_content = message.message
+        reply_id = message.id
+
+        if message_content is not None:
+            pattern = event.pattern_match.group()
+            matches = pattern.split(" ")
+
+            reply_prefix = "**Did you mean**: "
+            reply_msg = message_content
+
+            for match in matches[2::2]:
+                wordlist = match.split("/")
+                if len(wordlist) == 3:
+                    _, old, new_word = wordlist
+                    reply_msg = re.sub(old, new_word, reply_msg, 1)
+                elif len(wordlist) == 4:
+                    _, old, new_word, _ = wordlist
+                    reply_msg = re.sub(old, new_word, reply_msg)
+
+            REPLY = reply_prefix + reply_msg
+
+            await asyncio.wait(
+                [event.delete(), event.respond(REPLY, reply_to=reply_id)]
+            )
 
     @bot.on(events.NewMessage(pattern="/spam(mer)?", forwards=False))
     async def spam(event):
