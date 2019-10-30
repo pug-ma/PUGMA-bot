@@ -65,9 +65,7 @@ def commands(bot):
             text = "Meetup PUG-MA: " + str(event_num)
             await bot.send_file(event.chat_id, file=photo_url, caption=text)
 
-    @bot.on(
-        events.NewMessage(pattern="/sed(\s-e\s+s\/[\w]+\/[\w]+(\/g)?)+", forwards=False)
-    )
+    @bot.on(events.NewMessage(pattern="/sed(\s-e\s+s\/.+\/.+(\/g)?)+", forwards=False))
     async def sed(event):
         """/sed: Aplica um subconjunto do comando sed numa mensagem."""
 
@@ -79,8 +77,8 @@ def commands(bot):
             pattern = event.pattern_match.group()
             matches = pattern.split(" ")
 
-            reply_prefix = "**Did you mean**: "
-            reply_msg = message_content
+            reply_prefix = "**Did you mean**:\n"
+            reply_msg = f'"{message_content}"'
 
             for match in matches[2::2]:
                 wordlist = match.split("/")
