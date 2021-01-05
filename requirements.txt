@@ -14,7 +14,7 @@ more-itertools==6.0.0
 multidict==4.5.2
 olefile==0.46
 packaging==19.0
-Pillow==6.2.0
+Pillow==7.1.0
 pluggy==0.12.0
 py==1.8.0
 pyaes==1.6.1
