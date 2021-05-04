@@ -16,7 +16,7 @@ olefile==0.46
 packaging==19.0
 Pillow==7.1.0
 pluggy==0.12.0
-py==1.8.0
+py==1.10.0
 pyaes==1.6.1
 pyasn1==0.4.5
 pycparser==2.19
